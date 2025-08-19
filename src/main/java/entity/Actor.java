@@ -1,16 +1,15 @@
 package entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Set;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "actor")
 public class Actor {
@@ -28,7 +27,7 @@ public class Actor {
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
     @Column(name = "last_update")
-    private LocalDateTime lastUpdated;
+    private Date lastUpdated;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "film_actor",

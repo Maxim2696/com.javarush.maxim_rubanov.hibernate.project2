@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -28,7 +27,8 @@ public class Address {
     @Column(name = "district", length = 20)
     private String districtName;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "city_id")
+    @OneToOne
+    @JoinColumn(name = "city_id")
     private City city;
 
     @Column(name = "postal_code", length = 10)
@@ -40,5 +40,5 @@ public class Address {
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
     @Column(name = "last_update")
-    private LocalDateTime lastUpdate;
+    private Date lastUpdate;
 }

@@ -8,8 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.EnumSet;
@@ -49,7 +47,7 @@ public class Film {
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
     @Column(name = "last_update")
-    private LocalDateTime lastUpdate;
+    private Date lastUpdate;
 
     @Column(name = "special_features")
     @Convert(converter = SpecialFeaturesConverterDb.class)

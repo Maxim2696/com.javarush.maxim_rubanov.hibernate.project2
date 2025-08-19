@@ -6,9 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import java.time.LocalDateTime;
-import java.util.Set;
-import java.util.SimpleTimeZone;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -22,9 +20,9 @@ public class Customer {
     @Column(name = "customer_id")
     private Long customerId;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "store_id")
-    private Set<Store>  stores;
+    private Store stores;
 
     @Column(name = "first_name", length = 45)
     private String firstName;
@@ -35,18 +33,19 @@ public class Customer {
     @Column(length = 50)
     private String email;
 
-    @OneToOne(mappedBy = "address_id")
+    @OneToOne
+    @JoinColumn(name = "address_id")
     private Address address;
 
     private Integer active;
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
-    @Column(name = "create_update")
-    private LocalDateTime createUpdate;
+    @Column(name = "create_date")
+    private Date createUpdate;
 
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
     @Column(name = "last_update")
-    private LocalDateTime lastUpdate;
+    private Date lastUpdate;
 }

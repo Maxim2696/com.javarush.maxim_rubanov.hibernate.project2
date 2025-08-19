@@ -1,13 +1,12 @@
 package entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
-import java.time.LocalDateTime;
+import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -19,14 +18,16 @@ public class Store {
     @Column(name = "store_id")
     private Long storeId;
 
-    @OneToOne(mappedBy = "manager_staff_id")
+    @OneToOne
+    @JoinColumn(name = "manager_staff_id")
     private Staff staff;
 
-    @OneToOne(mappedBy = "address_id")
+    @OneToOne
+    @JoinColumn(name = "address_id")
     private Address address;
 
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
     @Column(name = "last_update")
-    private LocalDateTime lastUpdate;
+    private Date lastUpdate;
 }

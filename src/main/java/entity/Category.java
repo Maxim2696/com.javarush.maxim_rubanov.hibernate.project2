@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -26,7 +24,7 @@ public class Category {
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
     @Column(name = "last_update")
-    private LocalDateTime lastUpdated;
+    private Date lastUpdated;
 
     @OneToMany
     @JoinTable(name = "film_category",
