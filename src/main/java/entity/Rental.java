@@ -1,13 +1,12 @@
 package entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -34,7 +33,7 @@ public class Rental {
     @Column(name = "return_date")
     private Date returnDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "staff_id")
     private Staff staff;
 

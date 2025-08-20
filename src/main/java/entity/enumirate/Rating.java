@@ -1,5 +1,8 @@
 package entity.enumirate;
 
+import lombok.Getter;
+
+@Getter
 public enum Rating {
     G("G"),
     PG("PG"),

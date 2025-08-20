@@ -1,13 +1,12 @@
 package entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -21,7 +20,7 @@ public class City {
     @Column(name = "city", length = 50)
     private String cityName;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "country_id")
     private Country country;
 

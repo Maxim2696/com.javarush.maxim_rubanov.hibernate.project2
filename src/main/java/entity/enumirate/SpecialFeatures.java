@@ -1,5 +1,6 @@
 package entity.enumirate;
 
+
 public enum SpecialFeatures {
     TRAILERS("Trailers"),
     COMMENTARIES("Commentaries"),

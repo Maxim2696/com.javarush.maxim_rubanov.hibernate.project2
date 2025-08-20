@@ -1,14 +1,13 @@
 package entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -20,7 +19,7 @@ public class Customer {
     @Column(name = "customer_id")
     private Long customerId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")
     private Store stores;
 
@@ -48,4 +47,18 @@ public class Customer {
     @UpdateTimestamp
     @Column(name = "last_update")
     private Date lastUpdate;
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "customerId=" + customerId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", address=" + address +
+                ", active=" + active +
+                ", createUpdate=" + createUpdate +
+                ", lastUpdate=" + lastUpdate +
+                '}';
+    }
 }

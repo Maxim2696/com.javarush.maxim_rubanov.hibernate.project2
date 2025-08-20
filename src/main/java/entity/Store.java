@@ -30,4 +30,6 @@ public class Store {
     @UpdateTimestamp
     @Column(name = "last_update")
     private Date lastUpdate;
+
+
 }

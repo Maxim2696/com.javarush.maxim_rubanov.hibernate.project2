@@ -1,14 +1,13 @@
 package entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.util.Date;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -19,13 +18,13 @@ public class Inventory {
     @Column(name = "inventory_id")
     private Long inventoryId;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "film_id")
-    private Set<Film> films;
+    private Film film;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "store_id")
-    private Set<Store> stores;
+    private Store store;
 
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp

@@ -2,6 +2,7 @@ package entity.enumirate;
 
 import jakarta.persistence.AttributeConverter;
 
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.stream.Collectors;
 
@@ -10,7 +11,7 @@ public class SpecialFeaturesConverterDb implements AttributeConverter<EnumSet<Sp
     @Override
     public String convertToDatabaseColumn(EnumSet<SpecialFeatures> specialFeatures) {
         if (specialFeatures == null) {return null;}
-        return specialFeatures.stream().map(Enum::name).collect(Collectors.joining(","));
+        return specialFeatures.stream().map(SpecialFeatures::getRealName).collect(Collectors.joining(","));
     }
 
     @Override
@@ -18,9 +19,14 @@ public class SpecialFeaturesConverterDb implements AttributeConverter<EnumSet<Sp
         String[] split = s.split(",");
         if (split.length == 0) {return null;}
         EnumSet<SpecialFeatures> specialFeatures = EnumSet.noneOf(SpecialFeatures.class);
-        for (String str : split) {
-            specialFeatures.add(SpecialFeatures.valueOf(str));
-        }
+        Arrays.stream(split).map(x -> {
+            for (SpecialFeatures specialFeature : SpecialFeatures.values()) {
+                if (specialFeature.getRealName().equals(x)) {
+                    return specialFeature;
+                }
+            }
+            return null;
+        }).forEach(specialFeatures::add);
         return specialFeatures;
     }
 }

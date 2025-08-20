@@ -4,9 +4,7 @@ import entity.enumirate.Rating;
 import entity.enumirate.SpecialFeatures;
 import entity.enumirate.SpecialFeaturesConverterDb;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.util.Arrays;
 import java.util.Date;
@@ -14,8 +12,9 @@ import java.util.EnumSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "film", schema = "hibernate_project2")
-@Data
+@Table(name = "film")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Film {
@@ -52,13 +51,14 @@ public class Film {
     @Column(name = "special_features")
     @Convert(converter = SpecialFeaturesConverterDb.class)
     private EnumSet<SpecialFeatures> specialFeatures;
+//    private String specialFeatures;
 
     @ManyToOne
     @JoinColumn(name = "language_id")
     public Language languageId;
 
     @Column(name = "original_language_id")
-    private int originalLanguageId;
+    private Integer originalLanguageId;
 
     @OneToOne
     @JoinColumn(name = "film_id")
@@ -76,7 +76,7 @@ public class Film {
         joinColumns = @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "actor_id")
     )
-    private Set<Actor> categories;
+    private Set<Actor> actors;
 
     public void setSpecialFeatures(SpecialFeatures... specialFeatures) {
         EnumSet<SpecialFeatures> set = EnumSet.noneOf(SpecialFeatures.class);
@@ -85,4 +85,5 @@ public class Film {
         }
         this.specialFeatures = set;
     }
+
 }
