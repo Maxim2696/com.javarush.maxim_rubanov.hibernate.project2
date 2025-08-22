@@ -31,5 +31,13 @@ public class Store {
     @Column(name = "last_update")
     private Date lastUpdate;
 
-
+    @Override
+    public String toString() {
+        return "Store{" +
+                "storeId=" + storeId +
+                ", staff=" + staff.getUsername() +
+                ", address=" + address.getAddressName() +
+                ", lastUpdate=" + lastUpdate +
+                '}';
+    }
 }

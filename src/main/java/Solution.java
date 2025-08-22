@@ -1,15 +1,8 @@
 import datasource.MySessionFactory;
 import entity.*;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
-import repository.AddressRepImpl;
-import repository.CityRepImpl;
-import repository.CountryRepImpl;
-import repository.CustomerRepImpl;
-import service.AddressService;
-import service.CityService;
-import service.CountryService;
-import service.CustomerService;
+import repository.*;
+import service.*;
 
 import java.util.List;
 
@@ -27,9 +20,8 @@ public class Solution {
 //        Address address = addressService.getAddressOrCreate("16 Rouse Street", "Pitee", "941021", "9182736452", "Berlin", "Germany");
 //        Customer customer = createCustomer("Johna", "Smitha", "Johna12.Smitha21@cool.com", address, 1L);
 //        System.out.println(customerService.getCustomer("Johna", "Smitha"));
-
-        returnRentalFilm(130L, 80L);
-
+//        returnRentalFilm(111L, 4L);
+        rentalFilm(15L, 15L, 1L);
     }
 
 
@@ -39,35 +31,38 @@ public class Solution {
         return customerService.createCustomer(firstName, lastName, email, address, storeId);
     }
 
-    static void returnRentalFilm(Long customerId, Long filmId) {
-        try (Session session = MySessionFactory.getSessionFactory().openSession()) {
-//            CustomerService customerService = new CustomerService(new CustomerRepImpl());
-//            Customer customer = customerService.findCustomerById(customerId);
-
-//            Query<Film> filmQuery = session.createQuery("select f from Film f where filmId = :filmId", Film.class);
-//            filmQuery.setParameter("filmId", filmId);
-//            Film film = filmQuery.getSingleResult();
-
-//            Query<Inventory> queryInventory = session.createQuery("select i From Inventory i where film = :film", Inventory.class);
-//            queryInventory.setParameter("film", film);
-//            List<Inventory> inventories = queryInventory.list();
-
-            Query<Rental> query = session.createQuery("select r FROM Rental r where r.customer.customerId = :customerId " +
-                    "and r.inventory.film.filmId = :filmId", Rental.class);
-            query.setParameter("customerId", customerId);
-            query.setParameter("filmId", filmId);
-            List<Rental> rental = query.list();
-            session.beginTransaction();
-            for (Rental r : rental) {
-                session.remove(r);
-                session.flush();
-            }
-            session.getTransaction().commit();
-        }
+    static int returnRentalFilm(Long customerId, Long filmId) {
+        RentalRepImpl rentalRep = new RentalRepImpl();
+        RentalService  rentalService = new RentalService(rentalRep);
+        return rentalService.returnRentalFilm(customerId, filmId);
     }
 
-    static Film rentalNewFilm() {
-        return new Film();
+    static void rentalFilm(Long customerId, Long filmId, Long storeId) {
+        StoreService storeService = new StoreService(new StoreRepImpl());
+        CustomerService customerService = new CustomerService(new CustomerRepImpl());
+        InventoryService inventoryService = new InventoryService(new InventoryRepImpl());
+        RentalService rentalService = new RentalService(new RentalRepImpl());
+
+        Store store = storeService.getStore(storeId);
+        Customer customer = customerService.findCustomerById(customerId);
+        List<Inventory> inventoryList = inventoryService.findInventoryByFilmId(filmId);
+        List<Rental> rentalList = rentalService.getRentalByInventory(inventoryList);
+        Rental rental;
+        try (Session session = MySessionFactory.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            if (!rentalList.isEmpty()) {
+                Inventory inventory = rentalList.get(0).getInventory();
+                rental = rentalService.createRental(customer, inventory, store);
+            }
+            else {
+                FilmService filmService = new FilmService(new FilmRepImpl());
+                Film film = filmService.getFilm(filmId);
+                rental = rentalService.createRental(customer, inventoryService.createInventory(film, store), store);
+            }
+            PaymentService paymentService = new PaymentService(new PaymentRepImpl());
+            paymentService.addPaymentByCustomerByRental(customer, store.getStaff(), rental, 2.99);
+            session.getTransaction().commit();
+        }
     }
 
     static Film createNewfilm() {

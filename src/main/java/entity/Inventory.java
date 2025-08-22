@@ -30,4 +30,14 @@ public class Inventory {
     @UpdateTimestamp
     @Column(name = "last_update")
     private Date lastUpdate;
+
+    @Override
+    public String toString() {
+        return "Inventory{" +
+                "inventoryId=" + inventoryId +
+                ", film=" + film.getTitle() +
+                ", store=" + store.getAddress() +
+                ", lastUpdate=" + lastUpdate +
+                '}';
+    }
 }

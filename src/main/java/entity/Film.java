@@ -1,6 +1,7 @@
 package entity;
 
 import entity.enumirate.Rating;
+import entity.enumirate.RatingConverterDb;
 import entity.enumirate.SpecialFeatures;
 import entity.enumirate.SpecialFeaturesConverterDb;
 import jakarta.persistence.*;
@@ -40,7 +41,7 @@ public class Film {
     @Column(name = "replacement_cost")
     private Double replacementCost;
 
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = RatingConverterDb.class)
     private Rating rating;
 
     @Temporal(TemporalType.TIMESTAMP)

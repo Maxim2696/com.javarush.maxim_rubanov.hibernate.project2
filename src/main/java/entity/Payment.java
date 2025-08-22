@@ -2,6 +2,7 @@ package entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -32,6 +33,7 @@ public class Payment {
     private BigDecimal amount;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
     @Column(name = "payment_date")
     private Date paymentDate;
 

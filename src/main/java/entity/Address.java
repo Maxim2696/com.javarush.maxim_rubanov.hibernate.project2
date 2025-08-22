@@ -40,4 +40,18 @@ public class Address {
     @UpdateTimestamp
     @Column(name = "last_update")
     private Date lastUpdate;
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "addressId=" + addressId +
+                ", addressName='" + addressName + '\'' +
+                ", addressNameSecond='" + addressNameSecond + '\'' +
+                ", districtName='" + districtName + '\'' +
+                ", city=" + city.getCityName() +
+                ", postalCode='" + postalCode + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", lastUpdate=" + lastUpdate +
+                '}';
+    }
 }
