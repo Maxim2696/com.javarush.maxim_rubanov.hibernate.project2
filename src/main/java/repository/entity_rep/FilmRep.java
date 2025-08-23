@@ -4,4 +4,6 @@ import entity.Film;
 
 public interface FilmRep {
     Film getFilm(Long id);
+
+    Film addFilm(Film film);
 }

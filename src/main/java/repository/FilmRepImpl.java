@@ -15,4 +15,14 @@ public class FilmRepImpl implements FilmRep {
             return query.getSingleResult();
         }
     }
+
+    @Override
+    public Film addFilm(Film film) {
+        try (Session session = MySessionFactory.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            long id = (Long) session.save(film);
+            session.getTransaction().commit();
+            return getFilm(id);
+        }
+    }
 }

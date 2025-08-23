@@ -13,4 +13,8 @@ public class FilmService {
     public Film getFilm(Long id) {
         return repFilm.getFilm(id);
     }
+
+    public Film addFilm(Film film) {
+        return repFilm.addFilm(film);
+    }
 }

@@ -52,14 +52,13 @@ public class Film {
     @Column(name = "special_features")
     @Convert(converter = SpecialFeaturesConverterDb.class)
     private EnumSet<SpecialFeatures> specialFeatures;
-//    private String specialFeatures;
 
     @ManyToOne
     @JoinColumn(name = "language_id")
-    public Language languageId;
+    public Language language;
 
     @Column(name = "original_language_id")
-    private Integer originalLanguageId;
+    private Integer originalLanguage;
 
     @OneToOne
     @JoinColumn(name = "film_id")
@@ -87,4 +86,23 @@ public class Film {
         this.specialFeatures = set;
     }
 
+    @Override
+    public String toString() {
+        return "Film {" +
+                "filmId=" + filmId +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", releaseYear=" + releaseYear +
+                ", rentalDuration=" + rentalDuration +
+                ", rentalRate=" + rentalRate +
+                ", length=" + length +
+                ", replacementCost=" + replacementCost +
+                ", rating=" + rating +
+                ", lastUpdate=" + lastUpdate +
+                ", specialFeatures=" + specialFeatures +
+                ", language=" + language.getName() +
+                ", originalLanguage=" + originalLanguage +
+                ", category=" + category.getName() +
+                '}';
+    }
 }
