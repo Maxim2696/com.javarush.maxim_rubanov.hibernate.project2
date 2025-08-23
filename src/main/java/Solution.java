@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Set;
 
 public class Solution {
-    private static final CountryService countryService = MyServiceHelper.getInstance().getCountryService();
-    private static final CityService cityService = MyServiceHelper.getInstance().getCityService();
     private static final CustomerService customerService = MyServiceHelper.getInstance().getCustomerService();
     private static final AddressService addressService = MyServiceHelper.getInstance().getAddressService();
     private static final RentalService  rentalService = MyServiceHelper.getInstance().getRentalService();
@@ -26,10 +24,10 @@ public class Solution {
 
 
     public static void main(String[] args) {
-//        Address address = addressService.getAddressOrCreate("16 Rouse Street", "Pitee", "941021", "9182736452", "Berlin", "Germany");
-//        Customer customer = createCustomer("Johna", "Smitha", "Johna12.Smitha21@cool.com", address, 1L);
-//        returnRentalFilm(111L, 4L);
-//        rentalFilm(15L, 15L, 1L);
+        Address address = addressService.getAddressOrCreate("16 Rouse Street", "Pitee", "941021", "9182736452", "Berlin", "Germany");
+        createCustomer("Johna", "Smitha", "Johna12.Smitha21@cool.com", address, 1L);
+        returnRentalFilm(111L, 4L);
+        rentalFilm(15L, 15L, 1L);
         Actor actor1 = actorService.getById(7L);
         Actor actor2 = actorService.getById(22L);
         Actor actor3 = actorService.getById(111L);
