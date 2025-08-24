@@ -28,6 +28,7 @@ public class Solution {
         createCustomer("Johna", "Smitha", "Johna12.Smitha21@cool.com", address, 1L);
         returnRentalFilm(111L, 4L);
         rentalFilm(15L, 15L, 1L);
+
         Actor actor1 = actorService.getById(7L);
         Actor actor2 = actorService.getById(22L);
         Actor actor3 = actorService.getById(111L);

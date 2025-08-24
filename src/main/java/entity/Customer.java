@@ -3,6 +3,7 @@ package entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.util.Date;
 
@@ -36,7 +37,9 @@ public class Customer {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    private Integer active;
+    @Column(name = "active", columnDefinition = "BIT")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private Boolean isActive;
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
@@ -56,7 +59,7 @@ public class Customer {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", address=" + address +
-                ", active=" + active +
+                ", isActive=" + isActive +
                 ", createUpdate=" + createUpdate +
                 ", lastUpdate=" + lastUpdate +
                 '}';

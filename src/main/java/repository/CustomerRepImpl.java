@@ -10,8 +10,6 @@ import org.hibernate.query.Query;
 import repository.entity_rep.CustomerRep;
 
 public class CustomerRepImpl implements CustomerRep {
-    private static final Integer CUSTOMER_ACTIVE = 1;
-    private static final Integer CUSTOMER_NON_ACTIVE = 0;
     @Override
     public Customer get(String firstName, String lastName) throws NoResultException {
         try (Session session = MySessionFactory.getSessionFactory().openSession()){
@@ -29,7 +27,7 @@ public class CustomerRepImpl implements CustomerRep {
         customer.setLastName(lastName);
         customer.setEmail(email);
         customer.setAddress(address);
-        customer.setActive(CUSTOMER_ACTIVE);
+        customer.setIsActive(true);
         try (Session session = MySessionFactory.getSessionFactory().openSession()){
             Store store = session.find(Store.class, store_id);
             customer.setStores(store);
